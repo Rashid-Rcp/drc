@@ -94,14 +94,7 @@
 
         });
 
-        $("#copy").click(function(e){
-
-        	let drc_s2_code = $('#drc_s2').summernote('code');
-        	navigator.clipboard.writeText(drc_s2_code);
-
-        });
-
-         const get_project = (item)=>{
+        const get_project = (item)=>{
 
          	let project = $(item).find('td')[0].innerHTML;
          	if(project){
