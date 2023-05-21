@@ -65,7 +65,7 @@
         		};
 
         	$(listitems).each((index, item)=>{
-        		// is a project *first item is always project
+        		//first item is always project
         		if(project = get_project(item)){
 
         			if(project_taks.project){ // 
@@ -80,7 +80,7 @@
 
         		 	project_taks['project'] = project;
         		}
-        		else if(task = get_task(item)){ // is a task
+        		else if(task = get_task(item)){ 
         			project_taks['task'].push(task);
         		}
 
@@ -94,19 +94,21 @@
 
         });
 
-        const get_project = (item)=>{
+
+        const get_project = (item) => {
 
          	let project = $(item).find('td')[0].innerHTML;
-         	if(project){
 
+         	if(project){
          		return ($.parseHTML(project)[1].textContent);
          	}
          	else{
          		return false;
          	}
          	
-         }
-         const get_task = (item)=>{
+        }
+
+        const get_task = (item) => {
 
          	let task = $(item).find('td')[1].textContent;
          	let time = $(item).find('td')[2].textContent;
@@ -116,11 +118,13 @@
          			task: task,
          			time : time
          		 };
+
          	}
          	else{
          		return false;
          	}
-         }
+
+        }
 
          const generate_drc_s2_code = (drc_data)=>{
 
@@ -130,7 +134,7 @@
 
          	let content = '';
 
-         	drc_data.projects.forEach((item, index)=>{
+         	drc_data.projects.forEach( (item, index) => {
 
          		content += '<tr>';
 
@@ -140,8 +144,8 @@
 
          		content += '<td rowspan="'+item.task.length+'"  style="vertical-align: middle; text-align: center; border: 1px solid rgb(204, 204, 204); overflow: hidden;">' +item.project +'</td>';
 
-         		item.task.forEach((item, index)=>{
-         			//console.log(item);
+         		item.task.forEach( (item, index) => {
+         			
          			content += '<td style="border: 1px solid rgb(204, 204, 204); overflow: hidden;">' + item.task + '</td>';
          			content += '<td style="border: 1px solid rgb(204, 204, 204); overflow: hidden;">' + item.time + '</td>';
          			content += '<td style="border: 1px solid rgb(204, 204, 204); overflow: hidden;"></td>';
@@ -154,12 +158,12 @@
          	});
 
          	let table = '<google-sheets-html-origin><table xmlns="http://www.w3.org/1999/xhtml" ><tbody>';
-         		table += header + content + footer ;
-         		table += '</tbody></table> </google-sheets-html-origin>';
+         	table += header + content + footer ;
+         	table += '</tbody></table> </google-sheets-html-origin>';
 
          	return table;
 
-         }
+        }
     });
   </script>
 </body>
