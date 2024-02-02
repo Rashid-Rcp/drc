@@ -44,13 +44,10 @@
         	let drc_s1_code = $('#drc_s1').summernote('code');
         	let drc_s1_html = $.parseHTML(drc_s1_code);
         	let tb_body1 = $(drc_s1_html).find('tbody')[0];
-        	let tb_body2 = $(drc_s1_html).find('tbody')[1];
-        	let tb_body3 = $(drc_s1_html).find('tbody')[2];
-        	let listitems =  $(tb_body3).find('[role="listitem"]');
-
+        	let listitems =  $(drc_s1_html).find('[role="listitem"]');
         	let date = $(tb_body1).find('th')[0].innerHTML.split(',');
         	date =  date[1] + ',' + date[2];
-        	let total =  $(tb_body2).find('td')[1].innerHTML;
+        	let total =  $(drc_s1_html).find('.ttotal').find('td')[1].innerHTML;
 
         	let drc_data = {
         		date :date,
@@ -68,16 +65,13 @@
         		//first item is always project
         		if(project = get_project(item)){
 
-        			if(project_taks.project){ // 
-
+        			if(project_taks.project){ 
         				drc_data.projects.push(project_taks) ;
         				project_taks = {
 			        		project : '',
 			        		task:[]
 			        	};
-
         			}
-
         		 	project_taks['project'] = project;
         		}
         		else if(task = get_task(item)){ 
@@ -94,31 +88,28 @@
 
         });
 
-
-        const get_project = (item) => {
-
-         	let project = $(item).find('td')[0].innerHTML;
-
-         	if(project){
-         		return ($.parseHTML(project)[1].textContent);
-         	}
-         	else{
-         		return false;
-         	}
-         	
+		const get_project = (item) => {
+			let className = 'avatar_initial';
+			let projectElement = $(item).find('.' + className).parent();
+			
+			if (projectElement.length > 0) {
+				projectElement.find('.' + className).remove();
+				let projectText = projectElement.text().trim();
+				return projectText;
+			} else {
+				return false;
+			}
         }
 
-        const get_task = (item) => {
+         const get_task = (item) => {
 
          	let task = $(item).find('td')[1].textContent;
          	let time = $(item).find('td')[2].textContent;
          	if(task){
-
          		return { 
          			task: task,
          			time : time
          		 };
-
          	}
          	else{
          		return false;
